@@ -6,8 +6,13 @@
 # Visual Code and Visual Studio files
 .vsconfig
 .vs
+
 # Mac files
 .DS_Store
+
+# Save Data Files
+Assets/GameData.csv
+Assets/GameData.csv.meta
 
 /[Ll]ibrary/
 /[Tt]emp/
