@@ -28,15 +28,29 @@ public class InputHandler : MonoBehaviour
         }
 
         var rayHit = Physics2D.GetRayIntersection(_mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue()));
-        if (!rayHit.collider) { return; }
-
-        Debug.Log(rayHit.collider.gameObject.name);
-        Data d = new Data(name: rayHit.collider.gameObject.name,
+        Data d;
+        if (rayHit.collider)
+        {
+            d = new Data(name: rayHit.collider.gameObject.name,
                           timeTriggered: _stopwatch.GetElapsedTime().ToString(),
                           technique: Technique,
+                          postitionX: rayHit.collider.gameObject.transform.position.x.ToString(),
+                          postitionY: rayHit.collider.gameObject.transform.position.y.ToString(),
                           width: GetObjectWidth(rayHit.collider.gameObject),
                           amplitude: GetObjectHeight(rayHit.collider.gameObject),
-                          correct: (rayHit.collider) ? "True" : "False");
+                          correct: "True");
+        }
+        else
+        {
+            d = new Data(name: "MISSED",
+                          timeTriggered: _stopwatch.GetElapsedTime().ToString(),
+                          technique: Technique,
+                          postitionX: "",
+                          postitionY: "",
+                          width: "",
+                          amplitude: "",
+                          correct: "False");
+        }
 
         CSVHelper.WriteObjToCSV(d, CSVHelper.CSVName);
     }

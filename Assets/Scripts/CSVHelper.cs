@@ -69,7 +69,6 @@ namespace Assets.Scripts
         }
         private static void WriteToFile(string content, string filename)
         {
-            UnityEngine.Debug.Log(content);
             using (TextWriter textWriter = new StreamWriter(filename, true))
             {
                 textWriter.WriteLine(content);
