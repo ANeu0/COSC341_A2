@@ -23,7 +23,7 @@ public class InputHandler : MonoBehaviour
     {
         if (!context.started) return;
 
-        var rayHit = Physics2D.GetRayIntersection(_mainCamera.ScreenPointToRay(pos: (Vector3)Mouse.current.position.ReadValue()));
+        var rayHit = Physics2D.GetRayIntersection(_mainCamera.ScreenPointToRay(Mouse.current.position.ReadValue()));
         if (!rayHit.collider)
         {
             return;
@@ -33,6 +33,7 @@ public class InputHandler : MonoBehaviour
             dataLogger.Finaltime = dataLogger.time;
             dataLogger.time = 0;
             colorChanging.changeColor(rayHit.collider.gameObject);
+
             Debug.Log(rayHit.collider.gameObject.name);
         }
     }

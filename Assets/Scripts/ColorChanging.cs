@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ColorChanger : MonoBehaviour
 {
-    SpriteRenderer _spriteRenderer;
+    public SpriteRenderer _spriteRenderer;
     public int score = 0;
     public InputHandler inputHandler;
     public DataLogger dataLogger;
@@ -29,6 +29,6 @@ public class ColorChanger : MonoBehaviour
         }
         dataLogger.WriteCSV();
         _spriteRenderer = g.GetComponent<SpriteRenderer>();
-        _spriteRenderer.color = new Color(179f, 168f, 168f, 255f);
+        _spriteRenderer.color = new Color(0f, 0f, 0f, 1f);
     }
 }
