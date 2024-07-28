@@ -29,6 +29,6 @@ public class ColorChanger : MonoBehaviour
         }
         dataLogger.WriteCSV();
         _spriteRenderer = g.GetComponent<SpriteRenderer>();
-        _spriteRenderer.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+        _spriteRenderer.color = new Color(0.5f, 0.5f, 0.5f, 0.4f);
     }
 }
