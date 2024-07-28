@@ -5,9 +5,6 @@ using UnityEngine.InputSystem;
 
 public class TargetBehavior : MonoBehaviour
 {
-    public string tagToSearch = "Targets"; // Set this in the Inspector to the tag you want to search for
-    private GameObject[] gameObjectsWithTag;
-
 
     public GameObject targetObject; // Assign the target GameObject
     public Color restColor = Color.white; // Choose the new color
