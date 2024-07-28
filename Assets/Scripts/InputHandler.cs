@@ -1,4 +1,5 @@
 using Assets.Scripts;
+using Assets.Scripts.Main;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -31,15 +32,35 @@ public class InputHandler : MonoBehaviour
         Data d;
         if (rayHit.collider)
         {
-            d = new Data(name: rayHit.collider.gameObject.name,
-                          timeTriggered: _stopwatch.GetElapsedTime().ToString(),
-                          technique: Technique,
-                          postitionX: rayHit.collider.gameObject.transform.position.x.ToString(),
-                          postitionY: rayHit.collider.gameObject.transform.position.y.ToString(),
-                          width: GetObjectWidth(rayHit.collider.gameObject),
-                          amplitude: GetObjectHeight(rayHit.collider.gameObject),
-                          correct: "True");
+            var activeTarget = rayHit.collider.gameObject;
+            var activeTargetBehavior = activeTarget.GetComponent<TargetBehavior>();
+            //They hit the right target
+            if (activeTargetBehavior.active)
+            {
+                d = new Data(name: rayHit.collider.gameObject.name,
+                              timeTriggered: _stopwatch.GetElapsedTime().ToString(),
+                              technique: Technique,
+                              postitionX: activeTarget.transform.position.x.ToString(),
+                              postitionY: activeTarget.transform.position.y.ToString(),
+                              width: GetObjectWidth(rayHit.collider.gameObject),
+                              amplitude: GetObjectHeight(rayHit.collider.gameObject),
+                              correct: "True");
+                MainGameState.moveActiveTarget();
+            }
+            //They hit the wrong target
+            else
+            {
+                d = new Data(name: rayHit.collider.gameObject.name,
+                              timeTriggered: _stopwatch.GetElapsedTime().ToString(),
+                              technique: Technique,
+                              postitionX: rayHit.collider.gameObject.transform.position.x.ToString(),
+                              postitionY: rayHit.collider.gameObject.transform.position.y.ToString(),
+                              width: GetObjectWidth(rayHit.collider.gameObject),
+                              amplitude: GetObjectHeight(rayHit.collider.gameObject),
+                              correct: "False");
+            }
         }
+        //they hit no target
         else
         {
             d = new Data(name: "MISSED",
