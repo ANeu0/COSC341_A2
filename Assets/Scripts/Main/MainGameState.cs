@@ -16,6 +16,9 @@ namespace Assets.Scripts.Main
         public float targetSize = 0f;
         public Vector2 center = Vector2.zero;
 
+        public bool RandomMode = false;
+
+
         private InputHandler inputHandler;
         public static IList<GameObject> gameTargets = new List<GameObject>();
         private TargetGenerator TargetGen;
@@ -23,10 +26,9 @@ namespace Assets.Scripts.Main
 
         void Start()
         {
+            GameSettings.PopulateModeSettings(RandomMode);
             TargetGen = new TargetGenerator(targetTemplate);
             // Find and assign the InputHandler component (assuming it's on the same GameObject)
-            Debug.Log($"{targetTemplate}, {numberOfObjects}, {radius}, {center}");
-            Debug.Log(TargetGen);
             gameTargets = TargetGen.SpawnObjInCircle(numberOfObjects, radius, center, new Vector2(targetSize, targetSize));
 
 
@@ -40,10 +42,26 @@ namespace Assets.Scripts.Main
             var activeTarget = gameTargets[_activeTarget].GetComponent<TargetBehavior>();
             activeTarget.active = false;
             // move the target over 1
-            _activeTarget = (_activeTarget + 1) % gameTargets.Count;
-            Debug.Log(_activeTarget);
+            if (GameSettings.RandomMode)
+            {
+                _activeTarget = GetRandomIntExcluding(0, gameTargets.Count, _activeTarget);
+            }
+            else
+            {
+                _activeTarget = (_activeTarget + 1) % gameTargets.Count;
+            }
             activeTarget = gameTargets[_activeTarget].GetComponent<TargetBehavior>();
             activeTarget.active = true;
+        }
+        static int GetRandomIntExcluding(int min, int max, int exclude)
+        {
+            System.Random random = new System.Random();
+            int randomInt;
+            do
+            {
+                randomInt = random.Next(min, max);
+            } while (randomInt == exclude);
+            return randomInt;
         }
 
     }
